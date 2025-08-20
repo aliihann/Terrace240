@@ -60,26 +60,28 @@
 
 
 
+
+
 # Build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Копируем sln и проекты
 COPY Terrace240.sln ./
-COPY Terrace240/*.csproj Terrace240/
-COPY Terrace240.DAL/*.csproj Terrace240.DAL/
+COPY Terrace240/Terrace240.csproj Terrace240/
+COPY Terrace240.DAL/Terrace240.DAL.csproj Terrace240.DAL/
 
-# Восстанавливаем зависимости
 RUN dotnet restore Terrace240.sln
 
-# Копируем всё остальное
+# Копируем остальное
 COPY . .
 
 # Публикуем основной проект
-RUN dotnet publish Terrace240/Terrace240.csproj -c Release -o /app/publish
+RUN dotnet publish Terrace240/Terrace240.csproj -c Release -o /app/publish --no-restore
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
+ENV ASPNETCORE_URLS=http://0.0.0.0:${PORT}
 COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "Terrace240.dll"]

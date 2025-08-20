@@ -17,9 +17,5 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.1" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Terrace240.DAL\Terrace240.DAL.csproj" />
-  </ItemGroup>
-
+ 
 </Project>

@@ -57,28 +57,30 @@
 #COPY --from=build /app/publish .
 #ENTRYPOINT ["dotnet", "Terrace240.dll"]
 
+ 
 
-# Stage 1: Build
+
+
+
+
+ ## Stage 1: Build
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Копируем решение и проекты
+# Copy the solution file and restore dependencies
 COPY Terrace240.sln .
 COPY Terrace240/*.csproj Terrace240/
 COPY Terrace240.DAL/*.csproj Terrace240.DAL/
-
-# Восстанавливаем все зависимости
 RUN dotnet restore Terrace240.sln
 
-# Копируем весь код
+# Copy the rest of the application code
 COPY . .
 
-# Публикуем проект Terrace240
+# Publish the main project
 RUN dotnet publish Terrace240/Terrace240.csproj -c Release -o /app/publish
 
-# Stage 2: Runtime
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+## Stage 2: Runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
-EXPOSE 80
 ENTRYPOINT ["dotnet", "Terrace240.dll"]

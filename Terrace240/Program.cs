@@ -10,7 +10,7 @@ SQLitePCL.Batteries.Init();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<MainContext>(options =>
-    options.UseSqlite("Data Source=/tmp/app.db"));
+    options.UseSqlite("Data Source=app.db"));
 
 // Simple cookie auth
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -23,11 +23,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddScoped<IFileService, FileService>();
 
 
-//var connectionString = builder.Configuration["ConnectionStrings:Db"];
-//builder.Services.AddDbContext<MainContext>(servcie =>
-//{
-//    servcie.UseSqlServer(connectionString);
-//});
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())

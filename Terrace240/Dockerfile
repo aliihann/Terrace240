@@ -40,19 +40,24 @@
 #
 #
 
-# Build stage
+# Stage 1: build
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Копируем csproj и восстанавливаем зависимости
-COPY ["Terrace240.csproj", "./"]
-RUN dotnet restore "Terrace240.csproj"
+# копируем csproj обоих проектов
+COPY ["Terrace240/Terrace240.csproj", "Terrace240/"]
+COPY ["Terrace240.DAL/Terrace240.DAL.csproj", "Terrace240.DAL/"]
 
-# Копируем весь код и публикуем
+# восстанавливаем зависимости
+RUN dotnet restore "Terrace240/Terrace240.csproj"
+
+# копируем весь код
 COPY . .
+
+WORKDIR "/src/Terrace240"
 RUN dotnet publish -c Release -o /app/publish
 
-# Runtime stage
+# Stage 2: runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .

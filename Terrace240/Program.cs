@@ -20,6 +20,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.Name = "Tarrace240Admin";
     });
 
+
 builder.Services.AddScoped<IFileService, FileService>();
 
 

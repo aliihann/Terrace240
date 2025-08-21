@@ -25,6 +25,7 @@ namespace Terrace240.DAL
             {
                 optionsBuilder.UseSqlite("Data Source=app.db");
             }
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -9,8 +9,11 @@ SQLitePCL.Batteries.Init();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//builder.Services.AddDbContext<MainContext>(options =>
+//    options.UseSqlite("Data Source=app.db"));
+
 builder.Services.AddDbContext<MainContext>(options =>
-    options.UseSqlite("Data Source=app.db"));
+    options.UseSqlite($"Data Source={Path.Combine(builder.Environment.ContentRootPath, "app.db")}"));
 
 // Simple cookie auth
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

@@ -12,9 +12,6 @@ builder.Services.AddControllersWithViews();
 //builder.Services.AddDbContext<MainContext>(options =>
 //    options.UseSqlite("Data Source=app.db"));
 
-// добавил строчку для порта
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
-builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 builder.Services.AddDbContext<MainContext>(options =>
     options.UseSqlite($"Data Source={Path.Combine(builder.Environment.ContentRootPath, "app.db")}"));
@@ -30,6 +27,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddScoped<IFileService, FileService>();
 
+// добавил строчку для порта
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 var app = builder.Build();
 

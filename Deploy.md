@@ -12,5 +12,5 @@ docker build -t terrace240:1 .
 
 ## Run in verbose mode
 ```
-docker run -p 5000:8080 -e PORT=8080 terrace240:3
+docker run -p 5000:8080 -e PORT=8080 terrace240:1
 ```
